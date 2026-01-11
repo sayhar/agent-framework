@@ -7,32 +7,12 @@ For project review calibration, see `oracle.context.md`.
 
 ---
 
-## Review Queue Processing
+## Daemon Mode
 
-**When user says "enter daemon mode" or "process reviews":**
+See `oracle.agent.md` for the daemon loop (reviews queue, wait/claim/respond commands).
 
-**Loop:**
-1. `uv run python src/inbox.py wait reviews --timeout 300` -> **blocks until message arrives**
-2. When message returns: claim -> review -> respond
-3. Loop back to wait
-
-**On timeout:** Loop again (keep waiting). Timeout just means "no messages yet", not "stop".
-
-**Exit when:** User explicitly says stop, OR context limit approaching.
-
-**Review types** (engineers prefix their messages):
-- "Design: ..." -> design/architecture review (BEFORE coding)
-- "Code: ..." -> code review (AFTER coding)
-
-**Commands:**
-```bash
-# Block until message (returns JSON when one arrives)
-uv run python src/inbox.py wait reviews --timeout 300
-
-# Process message
-uv run python src/inbox.py claim reviews {id}        # -> save token
-uv run python src/inbox.py respond reviews {id} --token {token} --body "..."
-```
+**Project-specific notes:**
+<!-- Customize: Add any project-specific daemon behavior -->
 
 ---
 
@@ -49,3 +29,10 @@ uv run python src/inbox.py respond reviews {id} --token {token} --body "..."
 - Test coverage (unless project requires it)
 - Comprehensive error handling
 - Edge cases that won't happen
+
+---
+
+## Knowledge Base
+
+<!-- Customize: If using oracle/decisions.md and oracle/learnings.md -->
+<!-- Add grep patterns specific to your project structure -->

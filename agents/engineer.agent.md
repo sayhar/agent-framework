@@ -83,7 +83,7 @@ uv run python src/inbox.py wait engineer --from reviews --timeout 180
 - Timeout expires (e.g., 180 seconds)
 
 **If wait times out:**
-1. Spawn oracle subagent in background: `Task tool, subagent_type="oracle", run_in_background=true`
+1. Spawn oracle subagent in background with daemon instructions: `Task tool, subagent_type="oracle", run_in_background=true, prompt="Enter daemon mode and process the reviews queue"`
 2. Run wait again: `uv run python src/inbox.py wait engineer --from reviews --timeout 180`
 
 **When oracle says verify X:** STOP, verify, show evidence. Don't acknowledge and skip.
@@ -104,6 +104,42 @@ Explain decisions: concise for dev with ADHD, context for manager. Not tutorials
 - Print what's happening
 - Crash with clear messages
 - No defensive code for scenarios that won't happen
+
+### Subagent Discipline
+
+**Subagents burn tokens fast.** A vague prompt → exploration spiral → millions of tokens.
+
+**CRITICAL: Size tasks to ~10-15 tool calls.** Before spawning a subagent, estimate how many tool calls it will need. If >15, YOU decompose it first into subtasks, then spawn subagents for each subtask. Never give a subagent an open-ended task that could spiral.
+
+**Run in background by default.** Only block for quick checks (< 1 min expected).
+
+**Use haiku liberally.** Haiku is cheap. Catch mistakes early:
+- "Does this approach make sense?"
+- "Sanity check this output"
+
+**Model selection:**
+- Quick sanity check → `model="haiku"` (use liberally!)
+- Normal review → `model="sonnet"`
+- Critical/subtle → `model="opus"`
+
+**Scope examples:**
+```
+Bad:  "Create a complete user auth system" (open-ended, 50+ tools)
+Good: "Create auth/login.py based on auth/register.py" (~10 tools)
+```
+
+**Decomposition pattern:**
+```
+Task: "Create auth system" (too big)
+→ Subtask 1: "Research: list existing auth files" (5 tools)
+→ Subtask 2: "Create login.py based on register.py" (10 tools)
+→ Subtask 3: "Create logout.py" (8 tools)
+→ Subtask 4: "Quick haiku: review integration" (3 tools)
+```
+
+**Be specific, not open-ended:**
+- Bad: "Test the fix on some files and see if it works"
+- Good: "Check if PAGE_LEAKS count decreased in articles X, Y, Z after the fix"
 
 ## Quality Standards
 

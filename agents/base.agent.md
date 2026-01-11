@@ -1,31 +1,7 @@
 # Base Agent Instructions
 
-**This file contains PORTABLE AGENT INSTRUCTIONS.**
-For project-specific context, see `base.context.md`.
-
-## About This File
-
-**This file contains INSTRUCTIONS, not DATA.**
-
-- **Instructions** (belong here): HOW to work, WHEN to do things, WHAT to avoid
-- **Data** (in context files): WHAT the current structure is, WHAT the workflow is
-
-**Why separate?** Instructions are stable and portable. Data changes per project. Agent instructions shouldn't need updates every time the workflow evolves or when moving to a new project.
-
-**For current project state:** Read the project's `README.md` and `base.context.md`
-
-## Agent Types
-
-Define your agent types in the project's `base.context.md` file. Common patterns:
-
-- **engineer** — Executes implementation
-- **oracle** — Reviews code, critiques, suggests improvements
-- **architect** — Plans with the user, designs approaches (if needed)
-- **meta** — Works on the agent system itself
-
-Each agent type should have:
-- `{type}.agent.md` - Portable role definition (copy to new projects)
-- `{type}.context.md` - Project-specific context (rewrite for new project)
+**Portable instructions for all agents.**
+Project-specific: `base.context.md`, `this.base.agent.md`. Architecture: `agents/README.md`.
 
 ## Working Principles
 

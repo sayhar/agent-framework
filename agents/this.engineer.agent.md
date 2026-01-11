@@ -9,25 +9,10 @@ For project facts, see `engineer.context.md`.
 
 ## Requesting Code Reviews
 
-**TWO REVIEWS REQUIRED:**
-1. BEFORE coding (design review) - prefix with "Design:"
-2. AFTER coding (code review) - prefix with "Code:"
+See `engineer.agent.md` for the review mechanism (reviews queue, wait command).
 
-**Send to `reviews` queue:**
-```bash
-uv run python src/inbox.py add reviews "Design: {topic}" \
-  --from engineer --priority HIGH --body "{details}"
-```
-
-**Wait for response:**
-```bash
-uv run python src/inbox.py wait engineer --from reviews --timeout 180
-```
-
-**If no response after 3+ minutes:** Spawn background oracle subagent:
-```
-Task tool, subagent_type="oracle", run_in_background=true
-```
+**Project-specific notes:**
+<!-- Customize: Add any project-specific review requirements -->
 
 ---
 

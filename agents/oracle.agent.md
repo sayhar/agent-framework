@@ -12,7 +12,7 @@ For project-specific context, see `oracle.context.md`.
 
 ## Daemon Mode
 
-**If user says "enter daemon mode":** Loop to process multiple review requests without exiting.
+**Enter daemon mode if:** User says "enter daemon mode", OR you're spawned as a subagent with daemon/queue-processing instructions.
 
 **Daemon loop:**
 ```bash

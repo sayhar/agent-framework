@@ -5,7 +5,6 @@
 @../agents/base.agent.md
 @../agents/this.base.agent.md
 @../agents/base.context.md
-@../agents/principles/engineering.md
 
 ---
 
