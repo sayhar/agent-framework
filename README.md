@@ -43,7 +43,7 @@ Or work through `SETUP.md` manually.
          ┌─────────────────────┼─────────────────────┐
          ▼                     ▼                     ▼
 ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
-│  state/inboxes  │  │ state/sessions  │  │ oracle/*.md     │
+│  state/inboxes  │  │ state/sessions  │  │   oracle/*.md   │
 │  (messages)     │  │ (continuity)    │  │ (knowledge)     │
 └─────────────────┘  └─────────────────┘  └─────────────────┘
 ```
@@ -102,7 +102,7 @@ Parent agents can spawn scoped subagents via `.claude/agents/*.md` shims. Subage
 
 ### Knowledge Base
 
-Oracle maintains persistent knowledge in `oracle/`:
+Oracle maintains persistent knowledge in `agents/oracle/`:
 - `decisions.md` - Architectural choices, tagged by date
 - `learnings.md` - Domain discoveries, bug patterns
 
@@ -120,9 +120,9 @@ agents/
     inboxes/           # Inter-agent messages
     sessions/          # Session continuity files
 
-oracle/
-  decisions.md         # Technical decisions log
-  learnings.md         # Domain learnings log
+  oracle/
+    decisions.md       # Technical decisions log (Oracle-owned)
+    learnings.md       # Domain learnings log (Oracle-owned)
 
 .claude/
   CLAUDE.md            # Entry point with @imports and routing

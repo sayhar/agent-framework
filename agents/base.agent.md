@@ -26,7 +26,7 @@ Do your work, report back. The parent agent or user handles git operations.
 
 - README.md: workflow, getting started
 - PLAN.md: roadmap, future plans
-- oracle/decisions.md, oracle/learnings.md: Oracle-owned, grep on-demand
+- agents/oracle/decisions.md, oracle/learnings.md: Oracle-owned, grep on-demand
 - Docstrings: function usage
 - `--help` flags: script usage
 - Session notes (agents/state/sessions/): Required after each session - log, handoff, summary
@@ -48,7 +48,7 @@ Don't create new .md files. Update existing docs or send inbox messages as appro
 
 2. **Read recent sessions** (`head -20` on last 3-4 session files)
 
-3. **(Oracle only):** Know `oracle/decisions.md` and `oracle/learnings.md` exist for grep (don't load)
+3. **(Oracle only):** Know `agents/oracle/decisions.md` and `oracle/learnings.md` exist for grep (don't load)
 
 4. **Greet user with session options:**
    - Summarize inbox (if any)
@@ -61,7 +61,7 @@ Don't create new .md files. Update existing docs or send inbox messages as appro
 **Exception - Handoff items:** If you see a handoff item FROM a previous session with your name (e.g., "Handoff: ... (swift-falcon)" when you ARE swift-falcon), delete it after reading - it's been delivered to you.
 
 ### During work:
-- **Oracle:** Update `oracle/decisions.md` and `oracle/learnings.md` after reviews
+- **Oracle:** Update `agents/oracle/decisions.md` and `oracle/learnings.md` after reviews
 - **Other agents:** Write messages to other agents in their inbox
 - When you notice bad behavior patterns, send meta agent an inbox message requesting fixes
 
