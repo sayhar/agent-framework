@@ -24,7 +24,7 @@ from rich.panel import Panel
 
 console = Console()
 
-VALID_ROLES = ["engineer", "oracle", "meta", "architect", "reviews"]
+VALID_ROLES = ["engineer", "oracle", "meta", "reviews"]
 VALID_PRIORITIES = ["HIGH", "MEDIUM", "LOW"]
 INBOX_DIR = Path("agents/state/inboxes")
 SESSIONS_DIR = Path("agents/state/sessions")
@@ -97,6 +97,9 @@ def parse_inbox(content: str) -> list[dict]:
                 continue  # Only header, no content
         if not part:
             continue
+        # Skip HTML comments (legacy template format)
+        if part.startswith("<!--") and part.endswith("-->"):
+            continue
 
         # Extract title (## line)
         title_match = re.search(r"^## (.+)$", part, re.MULTILINE)
@@ -133,6 +136,8 @@ def parse_inbox(content: str) -> list[dict]:
         else:
             body_match = re.search(r"\*\*Priority:\*\*[^\n]*\n(.+)", part, re.DOTALL)
         body = body_match.group(1).strip() if body_match else ""
+        # Unescape --- that were escaped during write
+        body = unescape_body_separators(body)
 
         items.append(
             {
@@ -148,6 +153,18 @@ def parse_inbox(content: str) -> list[dict]:
         )
 
     return items
+
+
+def escape_body_separators(body: str) -> str:
+    """Escape --- in body to prevent parse_inbox from splitting on it."""
+    # Replace \n---\n with \n-​-​-\n (using zero-width spaces)
+    # This preserves visual appearance while preventing split
+    return body.replace("\n---\n", "\n-\u200b-\u200b-\n")
+
+
+def unescape_body_separators(body: str) -> str:
+    """Unescape --- in body after parsing."""
+    return body.replace("\n-\u200b-\u200b-\n", "\n---\n")
 
 
 def format_item(item: dict) -> str:
@@ -168,7 +185,8 @@ def format_item(item: dict) -> str:
         lines.append(f"**Claimed At:** {item['claimed_at']}")
     if item.get("body"):
         lines.append("")
-        lines.append(item["body"])
+        # Escape --- to prevent splitting issues
+        lines.append(escape_body_separators(item["body"]))
     return "\n".join(lines)
 
 
