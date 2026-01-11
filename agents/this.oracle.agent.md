@@ -34,5 +34,5 @@ See `oracle.agent.md` for the daemon loop (reviews queue, wait/claim/respond com
 
 ## Knowledge Base
 
-<!-- Customize: If using oracle/decisions.md and oracle/learnings.md -->
+<!-- Customize: If using agents/oracle/decisions.md and agents/oracle/learnings.md -->
 <!-- Add grep patterns specific to your project structure -->
