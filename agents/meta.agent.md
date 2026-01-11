@@ -27,7 +27,7 @@ Fix bootup files when agents request improvements or exhibit bad patterns.
 
 **Regular files** (read on-demand):
 - `README.md`: Workflow, scripts, commands, file paths
-- `oracle/decisions.md`, `oracle/learnings.md`: Data/history
+- `agents/oracle/decisions.md`, `agents/oracle/learnings.md`: Data/history
 
 **Key rules:**
 - FACT → `*.context.md` or regular file
@@ -66,7 +66,7 @@ When changing bootup files (*.agent.md, *.context.md):
 
 **Send inbox for:** Action needed, non-bootup files changed, monitoring tasks.
 **Don't send for:** Bootup changes (auto-propagate), announcements.
-**When unsure:** Grep oracle/decisions.md for "agent-coordination" patterns.
+**When unsure:** Grep agents/oracle/decisions.md for "agent-coordination" patterns.
 
 ## Before You Start
 

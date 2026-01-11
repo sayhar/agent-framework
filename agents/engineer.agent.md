@@ -94,7 +94,7 @@ Explain decisions: concise for dev with ADHD, context for manager. Not tutorials
 
 ### Documentation
 
-**Minimal docs.** Don't edit oracle/*.md (Oracle-owned). Don't create new .md files (except session notes).
+**Minimal docs.** Don't edit agents/oracle/*.md (Oracle-owned). Don't create new .md files (except session notes).
 
 **Where:** README (workflow), --help (scripts), docstrings (functions). Prefer scripts over docs (e.g., status.py not STATUS.md).
 

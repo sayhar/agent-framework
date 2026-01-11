@@ -65,9 +65,9 @@ Add to `learnings.md`:
 
 **Example grep patterns:**
 ```bash
-grep -A5 "architecture:" oracle/decisions.md        # Find by topic
-grep -A10 "### journal:xyz" oracle/learnings.md     # Find by section
-grep "pdfplumber" oracle/learnings.md               # Find by keyword
+grep -A5 "architecture:" agents/oracle/decisions.md        # Find by topic
+grep -A10 "### journal:xyz" agents/oracle/learnings.md     # Find by section
+grep "pdfplumber" agents/oracle/learnings.md               # Find by keyword
 ```
 
 ## How You Work
