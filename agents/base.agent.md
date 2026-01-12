@@ -30,7 +30,7 @@ Do your work, report back. The parent agent or user handles git operations.
 - Docstrings: function usage
 - `--help` flags: script usage
 - Session notes (agents/state/sessions/): Required after each session - log, handoff, summary
-- tmp/{session-name}/: scratch files (delete only when session status = COMPLETE, not on PARTIAL/BLOCKED handoffs)
+- `./tmp/{session-name}/`: scratch files -- use PROJECT tmp, not `/tmp/` (system root). Don't delete aggressively. Before deleting substantial temp files, ask oracle (via subagent) if anything should be preserved in learnings/decisions.
 
 Don't create new .md files. Update existing docs or send inbox messages as appropriate.
 
