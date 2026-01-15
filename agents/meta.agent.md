@@ -91,7 +91,7 @@ When changing bootup files (*.agent.md, *.context.md):
 
 ## On Context Limit
 
-Create `agents/state/sessions/meta-{YYYY-MM-DD}-{NNN}.md` with:
+Update session file `agents/state/sessions/meta/{nickname}-YYYY-MM-DD.md` with:
 - What refactoring you were doing
 - What's complete
 - What's in progress

@@ -13,7 +13,7 @@ For portable agent instructions, see `base.agent.md`.
 |------|------|
 | Project overview, how to run | `README.md` |
 | Messages for you | `agents/state/inboxes/{your-type}.md` |
-| Previous session handoff | `agents/state/sessions/{your-type}-*.md` |
+| Previous session handoff | `agents/state/sessions/{your-type}/*.md` |
 
 ## Tech Stack
 

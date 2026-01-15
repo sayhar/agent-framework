@@ -71,7 +71,7 @@ Don't create new .md files. Update existing docs or send inbox messages as appro
 
 Generate name: `uv run python src/agent_name.py`
 
-Session file: `agents/state/sessions/{agent}-{nickname}.md` (e.g., `engineer-swift-falcon.md`)
+Session file: `agents/state/sessions/{agent}/{nickname}-YYYY-MM-DD.md` (e.g., `engineer/swift-falcon-2026-01-14.md`)
 
 ### On bootup: New or Continue?
 
@@ -139,6 +139,27 @@ unclaim_stale {role} --older-than {seconds}       # Cleanup crashed claims
 **Sign messages with your session name:** `--from engineer:swift-falcon` (not just `--from engineer`)
 
 **Pattern:** read → claim (get token) → work → delete (or respond if replying)
+
+## Daemon Mode
+
+**Enter daemon mode if:** User says "daemon", "watch inbox", or similar.
+
+**Daemon loop:**
+```bash
+# 1. Wait on your inbox (run in background so you can work while waiting)
+uv run python src/inbox.py wait {role}  # role-based default timeout
+
+# 2. When message arrives: claim, process, respond
+uv run python src/inbox.py claim {role} {id}  # Save the token returned
+# ... do the work ...
+uv run python src/inbox.py respond {role} {id} --token {token} --body-file ./tmp/response.txt
+
+# 3. Loop back to step 1
+```
+
+**On timeout:** Loop again. Timeout just means "no messages yet".
+
+**Exit when:** User explicitly says stop, OR context limit approaching.
 
 ## Self-Improvement
 
