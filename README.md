@@ -1,6 +1,4 @@
-# Agent Framework
-
-A bicycle for Claude Code.
+# Agent Framework -- The Claude Code Bicycle
 
 ---
 
