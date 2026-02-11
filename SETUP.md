@@ -6,9 +6,13 @@ Work through this with `claude meta` or manually. When complete, delete this fil
 
 ## 1. Git Setup
 
-- [ ] **Remove origin**: `git remote remove origin`
+- [ ] **Rename origin to upstream** (keep for pulling framework updates):
+  ```bash
+  git remote rename origin upstream
+  git remote set-url --push upstream DISABLE
+  ```
 
-Add your own remote later when you have one.
+This keeps `upstream` for pulling agent-framework updates (`git fetch upstream && git merge upstream/main`) but blocks accidental pushes back to it. Add your own `origin` later when you have a repo for this project.
 
 ---
 

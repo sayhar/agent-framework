@@ -1,14 +1,26 @@
 # Engineering Principles
 
-Portable standards for rigorous work. Sources: team experience, Karpathy guidelines, YC vibe coding guide.
+Standards for agent-assisted development. Sources: team experience, Karpathy guidelines, YC vibe coding guide.
 
 ---
 
-## Think Before Coding
+## 1. Understand Before Building
 
-**Don't assume. Don't hide confusion. Surface tradeoffs.**
+**The user adds value by being clear about what should exist. The agent makes it happen.**
 
-Before implementing:
+There are two phases to every task:
+
+**Phase 1 — Collaborative: Figure out WHAT and WHY.** This is where the user's judgment matters most. The agent's job is to help the user think clearly: ask questions, surface tradeoffs, propose options, push back on unclear requirements. Don't rush past this. Time spent here saves 10x in execution.
+
+Before writing any code, the agent should be able to articulate:
+- **What** are we building? (Concrete, not vague)
+- **Why** are we building it? (The problem it solves, who has that problem)
+- **What does success look like?** (Specific, testable criteria)
+- **What are we NOT building?** (Scope boundaries)
+
+**Phase 2 — Autonomous: Build it.** Once the what/why is clear, the agent executes. Tests, code, iteration. The user shouldn't need to micromanage. If the agent needs to come back with questions, it means Phase 1 wasn't thorough enough.
+
+**Don't assume. Don't hide confusion. Surface tradeoffs.** Before implementing:
 - State your assumptions explicitly. If uncertain, ask.
 - If multiple interpretations exist, present them — don't pick silently.
 - If a simpler approach exists, say so. Push back when warranted.
@@ -20,7 +32,73 @@ Before implementing:
 
 ---
 
-## Simplicity First
+## 2. Test-Driven Development
+
+**Write tests first. This is the default workflow, not a nice-to-have.**
+
+Agents can write tests easily. Lean into this. TDD is the standard approach:
+
+1. Define what "done" looks like (from Phase 1)
+2. Write tests that verify "done"
+3. Watch them fail
+4. Make them pass
+5. Refactor
+
+**Don't bother the user with test details.** Just do TDD as part of how you work. The user sees "it works" and "here's proof it works." They don't need to approve test file names.
+
+**"Done" means tested.** Not "runs without errors." Not "works on one example." Tested on diverse cases with 3-5 examples minimum.
+
+**Prioritize high-level tests.** End-to-end and integration tests catch more real problems than unit tests. Simulate actual user behavior. Unit tests are for complex logic, not for testing that a function returns what you told it to return.
+
+**Tests as guardrails.** Tests define boundaries. They tell you when you're done. Without them you're guessing.
+
+**Test before proceeding.** Each piece works before you build on top of it. Commit before moving to the next section.
+
+**Catch regressions.** LLMs often make unnecessary changes to unrelated logic. Run the full test suite, not just the test for the thing you changed.
+
+---
+
+## 3. Language & Quality Bias
+
+**Choose languages where LLMs empirically produce the best code.**
+
+Not all languages are equal for agent-assisted development. The quality of an LLM's output depends heavily on the quality of its training corpus for that language.
+
+**Prefer: Rust, Go, Dart, Swift.** These communities produce high-quality code. Strong norms, good documentation, relatively few beginners copying bad patterns from Stack Overflow. LLMs write notably better code in these languages.
+
+**Treat with caution: Python, JavaScript.** Their training corpora are flooded with beginner code, copy-paste patterns, and quick-and-dirty solutions. LLMs reproduce these bad patterns readily. Think about how people thought about PHP 15 years ago — full of noob code and footguns. That's the situation with Python and JavaScript for LLM-generated code today.
+
+**Python as a tool, not a home for logic.** Python is fine for specific tasks: scripting, glue code, data pipelines, ML integration, quick automation. It's a tool like `sed` or `curl`. But core application logic should live in a language where LLMs produce higher-quality output.
+
+**Use the right language for the job** — but when multiple languages could work, bias toward the one with the highest-quality training corpus.
+
+---
+
+## 4. Parallel Exploration
+
+**Instead of "measure twice, cut once" — try ten times in parallel, pick what worked best.**
+
+Compute is cheap. Agent time is cheap. Use this:
+- Generate multiple approaches to a problem
+- Test them all against success criteria
+- Pick the winner
+- Discard the rest
+
+This works when you have **clear evaluation criteria** (from Phase 1). Without criteria, parallel attempts just multiply confusion — you end up with ten things and no way to tell which won.
+
+**When to parallelize:**
+- Multiple plausible architectures — prototype each, benchmark
+- Uncertain about an API/library — try both, see which is cleaner
+- Performance optimization — try multiple strategies, measure
+
+**When NOT to parallelize:**
+- Requirements are still unclear (go back to Phase 1)
+- The task is straightforward with one obvious approach
+- No way to objectively evaluate the results
+
+---
+
+## 5. Simplicity First
 
 **Minimum code that solves the problem. Nothing speculative.**
 
@@ -36,7 +114,7 @@ Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, sim
 
 ---
 
-## Surgical Changes
+## 6. Surgical Changes
 
 **Touch only what you must. Clean up only your own mess.**
 
@@ -54,27 +132,7 @@ When your changes create orphans:
 
 ---
 
-## Goal-Driven Execution
-
-**Define success criteria. Loop until verified.**
-
-Transform tasks into verifiable goals:
-- "Add validation" → "Write tests for invalid inputs, then make them pass"
-- "Fix the bug" → "Write a test that reproduces it, then make it pass"
-- "Refactor X" → "Ensure tests pass before and after"
-
-For multi-step tasks, state a brief plan:
-```
-1. [Step] → verify: [check]
-2. [Step] → verify: [check]
-3. [Step] → verify: [check]
-```
-
-Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
-
----
-
-## Reset When Stuck
+## 7. Reset When Stuck
 
 **Multiple failed attempts create layers of bad code.**
 
@@ -90,7 +148,7 @@ Failed attempt #1 teaches you the problem. Failed attempt #2 means you didn't le
 
 ---
 
-## Investigation & Debugging
+## 8. Investigation & Debugging
 
 **"Bug until proven otherwise."** Missing data or broken functionality = our bug by default. Burden of proof is on claiming it's external.
 
@@ -113,42 +171,13 @@ Failed attempt #1 teaches you the problem. Failed attempt #2 means you didn't le
 
 ---
 
-## Testing
-
-**Test on 3-5 examples.** One example proves nothing. Patterns emerge from multiple data points.
-
-**"Done" means tested.** Not "runs without errors." Not "works on one example." Tested on diverse cases.
-
-**Tests as guardrails.** When possible, write tests first to define boundaries. Tests tell you when you're done — without them you're guessing.
-
-**Prioritize high-level tests.** End-to-end and integration tests catch more real problems than unit tests. Simulate actual user behavior.
-
-**Test before proceeding.** Each piece works before you build on top of it. Commit before moving to the next section.
-
-**Catch regressions.** LLMs often make unnecessary changes to unrelated logic. Run the full test suite, not just the test for the thing you changed.
-
----
-
-## Quality
+## 9. Quality & Scope
 
 **Metrics lie.** "Found 300 items" might be garbage. Always spot-check.
 
 **Precise language:**
 - "runs without errors" ≠ "works" ≠ "production ready"
 - "should work" ≠ "tested and works"
-
-**When reviewing code:**
-- Be specific: "Line 45: crashes if X is null" not "this might not work"
-- Focus on: correctness, silent failures, readability
-- Skip: style preferences, hypothetical edge cases
-
----
-
-## Planning & Scope
-
-**Before proposing steps:** Map dependencies, trace impact, plan complete sequence.
-
-**Anti-pattern:** Answering incrementally, letting user catch missing steps.
 
 **Maintain scope control.** Keep a separate list for "later" ideas. Don't let scope creep into the current task. If you discover something worth doing but it's not the current ask, note it and move on.
 
@@ -162,6 +191,7 @@ Failed attempt #1 teaches you the problem. Failed attempt #2 means you didn't le
 
 | Trap | Fix |
 |------|-----|
+| Started coding before understanding the task | Go back to Phase 1 — articulate what/why/success |
 | Checked one example, claimed "unfixable" | Check 5+, document findings |
 | Tested one case, shipped "done" | Test 3-5 diverse cases |
 | Trusted the metric without looking | Metrics + spot-check = confidence |
@@ -170,6 +200,7 @@ Failed attempt #1 teaches you the problem. Failed attempt #2 means you didn't le
 | Multiple failed fixes layered on each other | Reset, implement cleanly |
 | Improved code adjacent to the actual change | Only touch what the task requires |
 | Scope crept mid-task | Note it for later, finish current task |
+| Defaulted to Python/JS without thinking | Consider if a higher-quality-corpus language fits |
 
 ---
 
