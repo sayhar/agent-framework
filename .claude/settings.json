@@ -1,0 +1,51 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run python $CLAUDE_PROJECT_DIR/hooks/require-uv.py"
+          },
+          {
+            "type": "command",
+            "command": "uv run python $CLAUDE_PROJECT_DIR/hooks/no-heredoc.py"
+          },
+          {
+            "type": "command",
+            "command": "uv run python $CLAUDE_PROJECT_DIR/hooks/no-compound-bash.py"
+          },
+          {
+            "type": "command",
+            "command": "uv run python $CLAUDE_PROJECT_DIR/hooks/pre-commit-reminder.py"
+          },
+          {
+            "type": "command",
+            "command": "uv run python $CLAUDE_PROJECT_DIR/hooks/warn-conventional-commit.py"
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run python $CLAUDE_PROJECT_DIR/hooks/no-new-md-files.py"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run python $CLAUDE_PROJECT_DIR/hooks/post-commit-oracle.py"
+          }
+        ]
+      }
+    ]
+  }
+}

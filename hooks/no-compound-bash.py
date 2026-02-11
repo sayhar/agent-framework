@@ -1,14 +1,22 @@
 #!/usr/bin/env python3
 """
-Block compound bash statements - use separate tool calls instead.
+Block compound bash statements - prefer separate tool calls or Python scripts.
 
 Catches: && || ; between commands
 Allows: ; inside quoted strings, || in grep patterns
+
+Blocks because engineers ignore warnings. Write Python scripts instead.
 """
 
 import json
 import sys
 import re
+
+
+def block(message: str) -> None:
+    """Block the command with an error message."""
+    print(json.dumps({"error": message}))
+    sys.exit(1)
 
 
 def main():
@@ -26,24 +34,10 @@ def main():
 
     # Check for compound operators
     if re.search(r'&&', no_quotes):
-        print(json.dumps({
-            "hookSpecificOutput": {
-                "hookEventName": "PreToolUse",
-                "permissionDecision": "deny",
-                "permissionDecisionReason": "Use separate Bash tool calls instead of &&. Easier to debug.",
-            }
-        }))
-        sys.exit(0)
+        block("Write a Python script instead of && chains")
 
     if re.search(r'\|\|', no_quotes):
-        print(json.dumps({
-            "hookSpecificOutput": {
-                "hookEventName": "PreToolUse",
-                "permissionDecision": "deny",
-                "permissionDecisionReason": "Use separate Bash tool calls instead of ||. Easier to debug.",
-            }
-        }))
-        sys.exit(0)
+        block("Write a Python script instead of || chains")
 
     # Semicolon between commands (but not at end or in for loops)
     # Allow: for x in ...; do; done
@@ -51,14 +45,7 @@ def main():
     if re.search(r';\s*\w', no_quotes) and not re.search(r'\b(do|then|else)\s*;', no_quotes):
         # Check it's not a for/while/if construct
         if not re.search(r'\b(for|while|if|elif)\b', command):
-            print(json.dumps({
-                "hookSpecificOutput": {
-                    "hookEventName": "PreToolUse",
-                    "permissionDecision": "deny",
-                    "permissionDecisionReason": "Use separate Bash tool calls instead of ; between commands.",
-                }
-            }))
-            sys.exit(0)
+            block("Write a Python script instead of ; between commands")
 
     sys.exit(0)
 

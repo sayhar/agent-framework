@@ -126,11 +126,13 @@ Read recent session TL;DRs (`head -20` on last 4 files), then offer:
 read {role}                          # Display inbox (shows IDs, claim status)
 peek {role} [--from {sender}] [--in-reply-to {id}]  # First unclaimed item as JSON
 wait {role} [--from {sender}] [--in-reply-to {id}] [--timeout {sec}]  # Block until item
-add {role} "title" --from {role}:{name} --priority Y --body "..."
+add {role} "title" --from {role}:{name} --priority Y --body "..."  # Short msgs only
+add {role} "title" --from ... --body-file ./tmp/msg.txt           # Long bodies (avoid approval)
 claim {role} {id}                    # Returns session token, adds timestamp
 unclaim {role} {id} --token {token}  # Release claim
 delete {role} {id}                   # Remove completed item
-respond {role} {id} --token {token} --body "..."  # Atomic: delete + respond (sets in_reply_to)
+respond {role} {id} --token {token} --body "..."   # Short responses
+respond {role} {id} --token {token} --body-file ./tmp/resp.txt  # Long responses
 unclaim_stale {role} --older-than {seconds}       # Cleanup crashed claims
 ```
 
