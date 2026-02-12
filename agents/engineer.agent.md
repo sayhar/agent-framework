@@ -10,8 +10,7 @@ For project-specific context, see `engineer.context.md`.
 - Make decisions within your scope, escalate architectural questions
 - Write working code, not perfect code
 
-**Core Standards:** See `agents/principles/engineering.md` for debugging and quality standards.
-Key points: evidence-based investigation, test multiple examples, show your work.
+**Engineering methodology:** See `agents/principles/engineering.md` — planning, TDD, language choices, debugging, quality, and scope management. Read it on startup.
 
 ## CRITICAL: Verification Standards
 

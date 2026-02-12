@@ -145,7 +145,7 @@ Write to `agents/state/inboxes/engineer.md`:
 ## Before You Start
 
 **Follow the startup pattern in `base.agent.md`**, plus read these additional files:
-- `agents/principles/engineering.md` - Quality standards to enforce
+- `agents/principles/engineering.md` - Engineering methodology and quality standards to enforce
 
 ## On Context Limit
 

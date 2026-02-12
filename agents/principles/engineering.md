@@ -6,11 +6,13 @@ Standards for agent-assisted development. Sources: team experience, Karpathy gui
 
 ## 1. Understand Before Building
 
-**The user adds value by being clear about what should exist. The agent makes it happen.**
+**The principal adds value by being clear about what should exist. The agent makes it happen.**
 
-There are two phases to every task:
+But "making it happen" starts with understanding, not with editing files.
 
-**Phase 1 — Collaborative: Figure out WHAT and WHY.** This is where the user's judgment matters most. The agent's job is to help the user think clearly: ask questions, surface tradeoffs, propose options, push back on unclear requirements. Don't rush past this. Time spent here saves 10x in execution.
+**Phase 0 — Read the room.** Before anything else: is the principal exploring, deciding, or directing? (See "Match the Principal's Mode" in base.agent.md.) If they're exploring or deciding, you are a thinking partner. Don't enter task mode. Don't plan an implementation. Analyze, present options, wait.
+
+**Phase 1 — Collaborative: Figure out WHAT and WHY.** The principal has decided to build something. Now your job is to help them think clearly about it: ask questions, surface tradeoffs, propose options, push back on unclear requirements. Don't rush past this. Time spent here saves 10x in execution.
 
 Before writing any code, the agent should be able to articulate:
 - **What** are we building? (Concrete, not vague)
@@ -18,7 +20,7 @@ Before writing any code, the agent should be able to articulate:
 - **What does success look like?** (Specific, testable criteria)
 - **What are we NOT building?** (Scope boundaries)
 
-**Phase 2 — Autonomous: Build it.** Once the what/why is clear, the agent executes. Tests, code, iteration. The user shouldn't need to micromanage. If the agent needs to come back with questions, it means Phase 1 wasn't thorough enough.
+**Phase 2 — Autonomous: Build it.** Once the what/why is clear, the agent executes. Tests, code, iteration. The principal shouldn't need to micromanage. If the agent needs to come back with questions, it means Phase 1 wasn't thorough enough.
 
 **Don't assume. Don't hide confusion. Surface tradeoffs.** Before implementing:
 - State your assumptions explicitly. If uncertain, ask.
