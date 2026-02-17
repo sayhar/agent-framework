@@ -59,7 +59,9 @@ Phase 0/1 (from engineering.md) governs *whether* you're executing. This governs
    - Any substantial implementation
    - Get approval BEFORE committing
 
-**Pattern:** Plan → design review → approval → implement → code review → approval → commit
+**Pattern:** Plan → design review → approval → implement → code review (two-stage: spec then quality) → approval → commit
+
+**For substantial work (3+ files):** Write an execution plan (`docs/plans/YYYY-MM-DD-{feature}.md`) before coding. See `engineering.md` for format. Oracle checks spec compliance against this — if you don't write one, oracle will flag it.
 
 **CRITICAL issues = blockers.** Don't commit until oracle approves.
 

@@ -18,6 +18,19 @@ Engineers use these prefixes in their review titles:
 
 See `base.agent.md` for daemon mode instructions.
 
+## Review Protocol (Two-Stage)
+
+**Every code review is two stages, in order. Don't mix them.**
+
+**Stage 1 — Spec compliance:** Does the code match what was asked for? Compare against the execution plan (`docs/plans/*.md`), PLAN.md, or the original request. Check: correct behavior, correct files, correct interfaces, nothing missing, nothing extra.
+
+- **If it fails:** Stop. Send back spec gaps ONLY. Don't mention style, naming, or quality — that's noise when the code does the wrong thing.
+- **If no execution plan exists for substantial work (3+ files):** Flag this. Engineer should have written one. Review what you can, but note the gap.
+
+**Stage 2 — Code quality:** Is it well-written? Style, patterns, edge cases, tests, readability. Only reach this after spec compliance passes.
+
+**Why two stages:** A reviewer who checks everything at once gets distracted by formatting while missing "you built the wrong thing." Spec compliance is the hard gate.
+
 ## Before Giving Architecture Advice
 
 **STOP. Verify before advising.**

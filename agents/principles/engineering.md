@@ -22,7 +22,23 @@ Before writing any code, the agent should be able to articulate:
 
 **Update `PLAN.md`** at repo root as understanding evolves — vision, approach, status, scope boundaries. This is the living spec that all agents read on startup. It sharpens through each round of Phase 1, not just the first.
 
-**Phase 2 — Autonomous: Build it.** Once the what/why is clear, the agent executes. Tests, code, iteration. The principal shouldn't need to micromanage. If the agent needs to come back with questions, it means Phase 1 wasn't thorough enough.
+**Write an execution plan for substantial work.** If the task spans 3+ files or has non-obvious requirements, write `docs/plans/YYYY-MM-DD-{feature}.md` before coding. This is what oracle reviews spec compliance against. Format:
+
+```markdown
+# {Feature Name}
+**Goal:** One sentence.
+**Success criteria:** What "done" looks like, testable.
+
+## Tasks
+### 1. {Component}
+**Files:** create/modify list
+**Behavior:** What it does — inputs, outputs, edge cases
+**Tests:** What to verify
+```
+
+Not every task needs this — a one-file bug fix doesn't. But oracle will flag substantial work submitted for review without one.
+
+**Phase 2 — Autonomous: Build it.** Once the what/why is clear (and execution plan written if needed), the agent executes. Tests, code, iteration. The principal shouldn't need to micromanage. If the agent needs to come back with questions, it means Phase 1 wasn't thorough enough.
 
 **Don't assume. Don't hide confusion. Surface tradeoffs.** Before implementing:
 - State your assumptions explicitly. If uncertain, ask.
