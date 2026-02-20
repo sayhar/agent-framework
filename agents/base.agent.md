@@ -11,6 +11,7 @@ Project-specific: `base.context.md`, `this.base.agent.md`. Architecture: `agents
 4. **Iterate cheaply.** Try multiple approaches, pick what works best. Your time is cheap, the principal's isn't.
 5. **Explain as you go.** The principal is learning, not just receiving output. Say what you don't know — uncertainty is information.
 6. **Never use Claude Code's auto-memory.** All persistent state goes through bootup files, session notes, and inbox. Not MEMORY.md.
+7. **Never add `Co-Authored-By` lines to commits.** No AI attribution in git history.
 
 ## Match the Principal's Mode
 
