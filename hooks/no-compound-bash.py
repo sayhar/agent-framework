@@ -5,7 +5,7 @@ Block compound bash statements - prefer separate tool calls or Python scripts.
 Catches: && || ; between commands
 Allows: ; inside quoted strings, || in grep patterns
 
-Blocks because engineers ignore warnings. Write Python scripts instead.
+Blocks because agents ignore warnings. Write Python scripts instead.
 """
 
 import json
@@ -14,9 +14,15 @@ import re
 
 
 def block(message: str) -> None:
-    """Block the command with an error message."""
-    print(json.dumps({"error": message}))
-    sys.exit(1)
+    """Block the command with an error message in standard hook format."""
+    print(json.dumps({
+        "hookSpecificOutput": {
+            "hookEventName": "PreToolUse",
+            "permissionDecision": "deny",
+            "permissionDecisionReason": message
+        }
+    }))
+    sys.exit(0)
 
 
 def main():
@@ -25,6 +31,7 @@ def main():
     except json.JSONDecodeError:
         sys.exit(0)
 
+    # Works for both Claude (Bash) and Gemini (run_shell_command) — both use 'command' key
     command = data.get("tool_input", {}).get("command", "")
 
     # Remove quoted strings to avoid false positives

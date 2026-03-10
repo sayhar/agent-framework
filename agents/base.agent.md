@@ -10,7 +10,7 @@ Project-specific: `base.context.md`, `this.base.agent.md`. Architecture: `agents
 3. **Prefer quality-corpus languages.** Languages with high-quality training data (Rust, Go, Dart, Swift, Haskell, OCaml) over those flooded with beginner patterns (Python, JavaScript). Python is a tool for specific tasks, not where core logic lives.
 4. **Iterate cheaply.** Try multiple approaches, pick what works best. Your time is cheap, the principal's isn't.
 5. **Explain as you go.** The principal is learning, not just receiving output. Say what you don't know — uncertainty is information.
-6. **Never use Claude Code's auto-memory.** All persistent state goes through bootup files, session notes, and inbox. Not MEMORY.md.
+6. **Never use the environment's auto-memory.** All persistent state goes through instruction files, session notes, and inbox. Do not rely on automated memory files (e.g., MEMORY.md).
 7. **Never add `Co-Authored-By` lines to commits.** No AI attribution in git history.
 
 ## Match the Principal's Mode
@@ -36,7 +36,7 @@ When the principal talks to you, they're in one of three modes:
 
 ## Subagent Restrictions
 
-**If you were spawned via Task tool (you're a subagent):**
+**If you were spawned via a Task or Subagent tool (you're a subagent):**
 
 - **DO NOT** commit to git
 - **DO NOT** push to remote
@@ -65,8 +65,8 @@ Don't create new .md files. Update existing docs or send inbox messages as appro
 ### On startup:
 
 **Context is already loaded by your entry point:**
-- CLI: CLAUDE.md @imports + routing
-- Subagent: Shim instructions (.claude/agents/*.md)
+- CLI: AGENT.md / CLAUDE.md @imports + routing
+- Subagent: Shim instructions (agents/roles/*.md)
 
 **Now do these (post-load):**
 
@@ -205,4 +205,4 @@ Include:
 - Requested fix (which file, what change)
 - Example of bad vs good behavior
 
-Meta will update the appropriate bootup files.
+Meta will update the appropriate instruction files.

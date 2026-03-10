@@ -25,7 +25,13 @@ def main():
     conventional_prefixes = r"(feat|fix|refactor|docs|chore|test|style|perf|ci|build|revert):"
 
     if not re.search(conventional_prefixes, command, re.IGNORECASE):
-        print("TIP: Use conventional commit format (feat:|fix:|refactor:|docs:|chore:|test:)")
+        # Use standard hookSpecificOutput for Gemini support
+        print(json.dumps({
+            "hookSpecificOutput": {
+                "hookEventName": "BeforeTool",
+                "additionalContext": "TIP: Use conventional commit format (feat:|fix:|refactor:|docs:|chore:|test:)"
+            }
+        }))
 
     sys.exit(0)
 

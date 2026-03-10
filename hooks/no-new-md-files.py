@@ -7,7 +7,8 @@ Allows:
   - agents/state/sessions/*.md (session notes)
   - agents/state/inboxes/*.md (inbox files)
   - agents/oracle/observations/*.md (oracle observations)
-  - .claude/agents/*.md (subagent shims)
+  - .claude/agents/*.md or .gemini/agents/*.md (subagent shims)
+  - agents/roles/*.md (role instructions)
   - agents/*.agent.md (agent definition files)
   - Editing existing files (can't detect, but Write tool requires Read first)
 """
@@ -23,8 +24,9 @@ def main():
     except json.JSONDecodeError:
         sys.exit(0)
 
-    # This hook is for Write tool, not Bash
-    if data.get("tool_name") != "Write":
+    # Check for different tool names (Write for Claude, write_file for Gemini)
+    tool_name = data.get("tool_name", "")
+    if tool_name not in ["Write", "write_file", "replace"]:
         sys.exit(0)
 
     file_path = data.get("tool_input", {}).get("file_path", "")
@@ -52,8 +54,12 @@ def main():
     if "agents/oracle/observations/" in file_path:
         sys.exit(0)
 
-    # Allow subagent shims in .claude/agents/
-    if ".claude/agents/" in file_path:
+    # Allow subagent shims
+    if ".claude/agents/" in file_path or ".gemini/agents/" in file_path:
+        sys.exit(0)
+
+    # Allow role definitions
+    if "agents/roles/" in file_path:
         sys.exit(0)
 
     # Allow agent definition files (*.agent.md, this.*.agent.md)

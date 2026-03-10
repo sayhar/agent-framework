@@ -1,8 +1,8 @@
 # Project Setup
 
-You are setting up an agent coordination framework for Claude Code. No agent roles exist yet — you're just Claude with these instructions. Work through each section with the user.
+You are setting up an agent coordination framework. No agent roles exist yet — you're just an agent with these instructions. Work through each section with the user.
 
-When done, you'll write the real `.claude/CLAUDE.md` and delete this file. The agent system bootstraps itself into existence through this process.
+When done, you'll write the root `AGENT.md` and the model-specific routing files, then delete this file. The agent system bootstraps itself into existence through this process.
 
 ---
 
@@ -76,7 +76,7 @@ New project? Continue to section 5.
 Spawn a reviewer subagent:
 
 ```
-Use Task tool with subagent_type="reviewer" to review:
+Use a subagent (reviewer type) to review:
 - Tech stack, architecture, key libraries, tradeoffs
 Include the filled-in context files for full context.
 ```
@@ -93,20 +93,16 @@ Fill in `PLAN.md` at the repo root. Vision and Approach should be clear from the
 
 ## 7. Finalize
 
-Write `.claude/CLAUDE.md` with the contents below (replacing `{PROJECT_NAME}` with the actual project name), then delete this file (`SETUP.md`).
+### 7.1 Write `AGENT.md` (root)
 
-Tell the user: "Setup complete! Type `/exit` and run `claude engineer` to start building."
-
-**Contents for `.claude/CLAUDE.md`:**
-
-````
+````markdown
 # {PROJECT_NAME} Agent System
 
 **Base context (always loaded):**
 
-@../agents/base.agent.md
-@../agents/this.base.agent.md
-@../agents/base.context.md
+@import agents/base.agent.md
+@import agents/this.base.agent.md
+@import agents/base.context.md
 
 ---
 
@@ -132,3 +128,28 @@ If user says "**meta**" or asks about the agent system itself:
 
 **Default:** If unclear, assume engineer (implementation work).
 ````
+
+### 7.2 Write Model-Specific Routing
+
+- **Gemini CLI:** Write `.gemini/settings.json`:
+  ```json
+  {
+    "context": {
+      "fileName": "AGENT.md"
+    }
+  }
+  ```
+- **Claude Code:** Write `.claude/CLAUDE.md`:
+  ```markdown
+  @import ../AGENT.md
+  ```
+
+### 7.3 Migrate Hooks (Gemini CLI only)
+
+Hooks are defined in `.claude/settings.json`. If using Gemini CLI, run `/hooks migrate` to auto-convert them to `.gemini/settings.json` format.
+
+### 7.4 Delete this file
+
+Delete `SETUP.md`.
+
+Tell the user: "Setup complete! Restart the agent and run `engineer` to start building."

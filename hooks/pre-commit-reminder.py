@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Pre-commit reminder hook for Claude Code.
+Pre-commit reminder hook.
 
 Only fires if commit message lacks validation evidence keywords.
 Helps agents remember to cite what they tested.
@@ -26,7 +26,13 @@ def main():
     has_evidence = any(kw in command.lower() for kw in validation_keywords)
 
     if not has_evidence:
-        print("TIP: Cite validation in commit message (e.g., 'tested on 3 files')")
+        # Use standard hookSpecificOutput for Gemini support
+        print(json.dumps({
+            "hookSpecificOutput": {
+                "hookEventName": "BeforeTool",
+                "additionalContext": "TIP: Cite validation in commit message (e.g., 'tested on 3 files')"
+            }
+        }))
 
     sys.exit(0)
 

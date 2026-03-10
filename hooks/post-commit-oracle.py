@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Post-commit Oracle reminder hook for Claude Code.
+Post-commit Oracle reminder hook.
 
 Nudges agents to consider Oracle review after significant commits.
 """
@@ -24,7 +24,13 @@ def main():
     significant = any(kw in command.lower() for kw in ["feat", "refactor", "fix"])
 
     if significant:
-        print("TIP: Consider Oracle review for significant changes.")
+        # Use standard hookSpecificOutput for Gemini support
+        print(json.dumps({
+            "hookSpecificOutput": {
+                "hookEventName": "AfterTool",
+                "additionalContext": "TIP: Consider Oracle review for significant changes."
+            }
+        }))
 
     sys.exit(0)
 

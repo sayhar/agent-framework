@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Require uv hook for Claude Code.
+Require uv hook.
 
 Blocks direct python/python3 commands - must use 'uv run python' instead.
 This ensures consistent environment and dependency management.
